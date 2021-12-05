@@ -16,7 +16,7 @@ export default function login() {
           username: 'joaozinho',
           email: 'joaozinho@gmail.com',
           name: 'Joãozinho',
-          admin: false,
+          admin: true,
         },
       }
     )

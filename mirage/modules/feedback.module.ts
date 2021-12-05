@@ -8,4 +8,8 @@ export default function feedback() {
       return new Response(400, {}, { errors: ['Usuário não existe'] })
     return new Response(200, {}, { message: 'Feedback enviado com sucesso' })
   })
+
+  this.get('feedback', (schema, request) => {
+    return new Response(200, {}, this.schema.db.feedbacks)
+  })
 }

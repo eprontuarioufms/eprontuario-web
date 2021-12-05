@@ -4,4 +4,5 @@ export default {
   paciente: require('./paciente.module'),
   feedback: require('./feedback.module'),
   professor: require('./professor.module'),
+  documentos: require('./documentos.module'),
 }
