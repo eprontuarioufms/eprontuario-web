@@ -68,7 +68,7 @@
               </v-col>
             </v-card-actions>
             <v-row justify="center" class="ma-2">
-              <NuxtLink to="esqueci-a-senha"> Esqueceu a Senha ? </NuxtLink>
+              <!-- <NuxtLink to="esqueci-a-senha"> Esqueceu a Senha ? </NuxtLink> -->
             </v-row>
           </v-card>
         </v-flex>
@@ -78,15 +78,15 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, email, minLength } from 'vuelidate/lib/validators'
+import { validationMixin } from "vuelidate";
+import { required, email, minLength } from "vuelidate/lib/validators";
 
-import { mapMutations, mapGetters } from 'vuex'
-import { routerMixin, toastMixin } from '~/shared/mixins'
-import { createToastErrorMessage } from '~/shared/helpers/createToastErrorMessage'
+import { mapMutations, mapGetters } from "vuex";
+import { routerMixin, toastMixin } from "~/shared/mixins";
+import { createToastErrorMessage } from "~/shared/helpers/createToastErrorMessage";
 export default {
   mixins: [validationMixin, toastMixin, routerMixin],
-  layout: 'unlogged',
+  layout: "unlogged",
   validations: {
     form: {
       email: {
@@ -102,68 +102,68 @@ export default {
   data: () => ({
     showPassword: false,
     form: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   }),
 
   computed: {
-    ...mapGetters('User', ['isLoggedIn']),
+    ...mapGetters("User", ["isLoggedIn"]),
     getEmailErrors() {
       return this.$v.form.email.$error && !this.$v.form.email.required
-        ? 'Campo obrigatório'
+        ? "Campo obrigatório"
         : this.$v.form.email.$error && !this.$v.form.email.email
-        ? 'Email inválido'
-        : ''
+        ? "Email inválido"
+        : "";
     },
     getPasswordErrors() {
       return this.$v.form.password.$error && !this.$v.form.password.required
-        ? 'Campo obrigatório'
+        ? "Campo obrigatório"
         : this.$v.form.password.$error && !this.$v.form.password.minLength
-        ? 'A senha deve ter no mínimo 6 caracteres'
-        : ''
+        ? "A senha deve ter no mínimo 6 caracteres"
+        : "";
     },
   },
 
   mounted() {
-    this.redirectUserIfLoggedIn()
+    this.redirectUserIfLoggedIn();
   },
 
   methods: {
-    ...mapMutations('shared', ['toggleLoadingOverlay']),
-    ...mapMutations('User', ['setUser', 'setToken']),
+    ...mapMutations("shared", ["toggleLoadingOverlay"]),
+    ...mapMutations("User", ["setUser", "setToken"]),
     async doLogin() {
-      this.$v.$touch()
-      if (this.$v.$invalid) return
+      this.$v.$touch();
+      if (this.$v.$invalid) return;
 
       try {
-        this.toggleLoadingOverlay(true)
-        const { data } = await this.$axios.post('api/login', this.form)
+        this.toggleLoadingOverlay(true);
+        const { data } = await this.$axios.post("api/login", this.form);
 
-        const { token, user } = data
+        const { token, user } = data;
 
-        this.setUser(user)
-        this.setToken(token)
+        this.setUser(user);
+        this.setToken(token);
 
-        this.createSuccessToast('Login realizado com sucesso!')
-        this.goTo('/')
+        this.createSuccessToast("Login realizado com sucesso!");
+        this.goTo("/");
       } catch (error) {
-        const errors = createToastErrorMessage(error)
-        errors.map((error) => this.createErrorToast(error))
+        const errors = createToastErrorMessage(error);
+        errors.map((error) => this.createErrorToast(error));
       } finally {
-        this.toggleLoadingOverlay(false)
+        this.toggleLoadingOverlay(false);
       }
     },
     goTo(route) {
-      this.$router.push(route)
+      this.$router.push(route);
     },
     redirectUserIfLoggedIn() {
       if (this.isLoggedIn) {
-        this.goTo('/')
+        this.goTo("/");
       }
     },
   },
-}
+};
 </script>
 
 <style>
