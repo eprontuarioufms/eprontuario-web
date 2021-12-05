@@ -3,6 +3,7 @@ import { VuexModule, Module, Mutation } from 'vuex-module-decorators'
 @Module({
   namespaced: true,
   name: 'shared',
+  stateFactory: true,
 })
 export default class Shared extends VuexModule {
   isDark = true

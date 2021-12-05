@@ -11,6 +11,7 @@ interface IUser {
 @Module({
   namespaced: true,
   name: 'User',
+  stateFactory: true,
 })
 export default class User extends VuexModule {
   token: string = ''
