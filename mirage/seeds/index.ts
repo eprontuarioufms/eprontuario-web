@@ -8,7 +8,12 @@ const professorSeeder = (server: Server) => {
   server.createList('professor', 10)
 }
 
+const feedbackSeeder = (server: Server) => {
+  server.createList('feedback', 10)
+}
+
 export default function seeds(server: Server) {
   pacienteSeeder(server)
   professorSeeder(server)
+  feedbackSeeder(server)
 }
