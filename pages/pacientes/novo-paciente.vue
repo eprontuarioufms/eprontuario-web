@@ -84,11 +84,12 @@ import { LAYOUT } from '~/constants'
 import { Paciente } from '~/interfaces/paciente'
 import { toastMixin } from '~/shared/mixins'
 
-import { CreatePacienteUseCase } from '~/usecases/paciente/CreatePacienteUseCase'
+import { CreatePacienteUseCase } from '~/usecases/pacient/CreatePacientUseCase'
 export default Vue.extend({
   name: 'NovoPaciente',
   mixins: [toastMixin],
   layout: LAYOUT.default,
+  middleware: ['auth'],
   data: () => ({
     nome: '',
     cpf: '',

@@ -15,12 +15,14 @@
       label="Procedimentos"
       solo-inverted
       return-object
-    ></v-autocomplete>
+    />
   </v-responsive>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+
+import { GetOnlyDocumentTitle } from '~/usecases/document'
 export default Vue.extend({
   name: 'VAutoCompleteInput',
   data: () => ({
@@ -31,9 +33,18 @@ export default Vue.extend({
   watch: {
     select(val) {
       this.search = ''
-      if (this.$route.path !== `/home/documento/${val.id}`) {
-        this.$router.push(`/home/documento/${val.id}`)
+      if (this.$route.path !== `/documento/${val}`) {
+        this.$router.push(`/documento/${val}`)
       }
+    },
+  },
+  mounted() {
+    this.fetchData()
+  },
+  methods: {
+    async fetchData() {
+      const { data } = await new GetOnlyDocumentTitle(this.$axios).execute()
+      this.documentos = data
     },
   },
 })

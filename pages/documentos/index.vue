@@ -1,13 +1,15 @@
 <template>
-  <v-container>
-    <h1>Olá</h1>
-  </v-container>
+  <v-page-template title="Documentos" has-back-button></v-page-template>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import { LAYOUT } from '~/constants'
+import VPageTemplate from '~/shared/components/VPageTemplate.vue'
 
-@Component
-export default class Documentos extends Vue {}
+export default Vue.extend({
+  components: { VPageTemplate },
+  layout: LAYOUT.default,
+  middleware: ['auth'],
+})
 </script>

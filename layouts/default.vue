@@ -16,5 +16,8 @@ import Vue from 'vue'
 
 export default Vue.extend({
   middleware: ['auth'],
+  mounted() {
+    console.log(this.$store.state.DocumentModel)
+  },
 })
 </script>

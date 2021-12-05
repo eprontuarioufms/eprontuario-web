@@ -17,10 +17,13 @@
 import Vue from 'vue'
 
 import { mapMutations } from 'vuex'
+import { LAYOUT } from '~/constants'
 
 import { Paciente } from '~/interfaces'
 export default Vue.extend({
   name: 'PacienteID',
+  layout: LAYOUT.default,
+  middleware: ['auth'],
 
   data: () => ({
     id: '',

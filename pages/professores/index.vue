@@ -55,9 +55,12 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { LAYOUT } from '~/constants'
 import { routerMixin } from '~/shared/mixins'
 export default {
   mixins: [routerMixin],
+  layout: LAYOUT.default,
+  middleware: ['auth'],
   data: () => ({
     headers: [
       { text: 'Nome', value: 'nome' },

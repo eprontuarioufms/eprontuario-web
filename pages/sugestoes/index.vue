@@ -1,5 +1,5 @@
 <template>
-  <v-page-template title="Sugestões">
+  <v-page-template title="Sugestões" has-back-button>
     <v-card class="my-5 pa-5">
       <v-card-title> Feedback </v-card-title>
       <v-card-subtitle>
@@ -44,14 +44,15 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapMutations, mapState } from 'vuex'
-import VPageTemplate from '~/shared/components/VPageTemplate.vue'
+import { LAYOUT } from '~/constants'
 import { toastMixin } from '~/shared/mixins'
 
 import { CreateFeedbackUseCase } from '~/usecases/feedback/CreateFeedbackUseCase'
 
 export default Vue.extend({
-  components: { VPageTemplate },
   mixins: [toastMixin],
+  layout: LAYOUT.default,
+  middleware: ['auth'],
   data: () => ({
     feedback: '',
     isFormValid: false,

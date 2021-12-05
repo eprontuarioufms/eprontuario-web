@@ -1,6 +1,6 @@
 <template>
-  <v-page-template title="Pacientes">
-    <v-row justify="end">
+  <v-page-template title="Pacientes" has-back-button>
+    <v-row justify="end" class="ma-1">
       <v-btn color="success" @click="goTo('/pacientes/novo-paciente')">
         Adicionar Novo
       </v-btn>
@@ -8,10 +8,10 @@
 
     <v-card class="my-5">
       <v-data-table :items="pacientes" :headers="getTableHeader">
-        <template v-slot:item.cpf="{ item }">
+        <template #item.cpf="{ item }">
           <v-text-field v-mask="'###.###.###-##'" readonly :value="item.cpf" />
         </template>
-        <template v-slot:item.acoes="{ item }">
+        <template #item.acoes="{ item }">
           <v-btn icon class="ml-2" @click="goTo(`pacientes/${item.id}`)">
             <v-icon class="ml-2" small> mdi-arrow-right </v-icon>
           </v-btn>
@@ -46,9 +46,15 @@
 <script>
 import Vue from 'vue'
 import { mapMutations } from 'vuex'
+import { LAYOUT } from '~/constants'
 import { routerMixin } from '~/shared/mixins'
+
+import { GetPacienteUseCase } from '~/usecases/pacient'
+
 export default Vue.extend({
   mixins: [routerMixin],
+  layout: LAYOUT.default,
+  middleware: ['auth'],
 
   data: () => ({
     pacientes: [],
@@ -84,9 +90,13 @@ export default Vue.extend({
 
     async fetchPacientes() {
       this.toggleLoadingOverlay()
-      const { data } = await this.$axios.get('api/pacientes')
-      this.pacientes = data
-      this.toggleLoadingOverlay()
+      try {
+        this.pacientes = await new GetPacienteUseCase(this.$axios).execute()
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.toggleLoadingOverlay()
+      }
     },
   },
 })
